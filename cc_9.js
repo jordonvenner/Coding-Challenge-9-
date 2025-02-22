@@ -232,5 +232,111 @@ class Employee {
   console.log("Total Payroll:", company.calculateTotalPayroll());
 
 
+
+  //Task 5: Implementing Promotions
+
+  // Employee Class
+class Employee {
+    constructor(name, id, department, salary) {
+      this.name = name;
+      this.id = id;
+      this.department = department;
+      this.salary = salary;
+    }
+  
+    // Method to return employee details
+    getDetails() {
+      return `Employee: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}`;
+    }
+  
+    // Method to calculate annual salary
+    calculateAnnualSalary() {
+      return this.salary * 12;
+    }
+  }
+  
+  // Manager Class (inherits from Employee)
+  class Manager extends Employee {
+    constructor(name, id, department, salary, teamSize) {
+      super(name, id, department, salary);
+      this.teamSize = teamSize;
+    }
+  
+    // Override getDetails() to include team size
+    getDetails() {
+      return `Manager: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`;
+    }
+  
+    // Method to calculate annual salary (including bonus)
+    calculateAnnualSalary() {
+      const baseSalary = super.calculateAnnualSalary(); // Get salary from Employee
+      const bonus = baseSalary * 0.1; // 10% bonus
+      return baseSalary + bonus;
+    }
+  }
+  
+  // Company Class
+  class Company {
+    constructor(name) {
+      this.name = name;
+      this.employees = [];
+    }
+  
+    // Method to add an employee
+    addEmployee(employee) {
+      this.employees.push(employee);
+    }
+  
+    // Method to list all employees
+    listEmployees() {
+      this.employees.forEach(emp => console.log(emp.getDetails()));
+    }
+  
+    // Method to promote an employee to a manager
+    promoteToManager(employee, teamSize) {
+      // Find the employee index in the array
+      const index = this.employees.indexOf(employee);
+      
+      if (index !== -1) {
+        // Create a new Manager object using the employee's details
+        const manager = new Manager(employee.name, employee.id, employee.department, employee.salary, teamSize);
+        
+        // Replace the employee with the new manager in the array
+        this.employees[index] = manager;
+  
+        console.log(`${employee.name} has been promoted to a Manager!`);
+      } else {
+        console.log("Employee not found in company records.");
+      }
+    }
+  
+    // Method to calculate total payroll (sum of all annual salaries)
+    calculateTotalPayroll() {
+      return this.employees.reduce((total, emp) => total + emp.calculateAnnualSalary(), 0);
+    }
+  }
+  
+  // Create Employees
+  const emp1 = new Employee("Alice Johnson", 101, "Sales", 5000);
+  const mgr1 = new Manager("John Smith", 201, "IT", 8000, 5);
+  
+  // Create Company
+  const company = new Company("TechCorp");
+  
+  // Add Employees to Company
+  company.addEmployee(emp1);
+  company.addEmployee(mgr1);
+  
+  // List Employees Before Promotion
+  console.log("Before Promotion:");
+  company.listEmployees();
+  
+  // Promote Employee to Manager
+  company.promoteToManager(emp1, 3);
+  
+  // List Employees After Promotion
+  console.log("After Promotion:");
+  company.listEmployees();
+
   
   
