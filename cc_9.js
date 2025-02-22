@@ -77,3 +77,74 @@ class Employee {
   
   console.log(mgr1.calculateBonus()); 
   //Expected output: 9600
+
+
+  //Task 3: Creating a Company Class
+
+  class Employee {
+    constructor(name, id, department, salary) {
+      this.name = name;
+      this.id = id;
+      this.department = department;
+      this.salary = salary;
+    }
+  
+    // Method to return employee details
+    getDetails() {
+      return `Employee: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}`;
+    }
+  
+    // Method to calculate annual salary
+    calculateAnnualSalary() {
+      return this.salary * 12;
+    }
+  }
+  
+  class Manager extends Employee {
+    constructor(name, id, department, salary, teamSize) {
+      super(name, id, department, salary);
+      this.teamSize = teamSize;
+    }
+  
+    // Override getDetails() to include team size
+    getDetails() {
+      return `Manager: ${this.name}, ID: ${this.id}, Department: ${this.department}, Salary: $${this.salary}, Team Size: ${this.teamSize}`;
+    }
+  
+    // Method to calculate bonus (10% of annual salary)
+    calculateBonus() {
+      return this.calculateAnnualSalary() * 0.1;
+    }
+  }
+  
+  class Company {
+    constructor(name) {
+      this.name = name;
+      this.employees = [];
+    }
+  
+    // Method to add an employee
+    addEmployee(employee) {
+      this.employees.push(employee);
+    }
+  
+    // Method to list all employees
+    listEmployees() {
+      this.employees.forEach(emp => console.log(emp.getDetails()));
+    }
+  }
+  
+  // Creating Employee and Manager objects
+  const emp1 = new Employee("Alice Johnson", 101, "Sales", 5000);
+  const mgr1 = new Manager("John Smith", 201, "IT", 8000, 5);
+  
+  // Creating a Company object
+  const company = new Company("TechCorp");
+  
+  // Adding employees to the company
+  company.addEmployee(emp1);
+  company.addEmployee(mgr1);
+  
+  // Listing employees
+  company.listEmployees();
+  
